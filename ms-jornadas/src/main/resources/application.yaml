@@ -1,0 +1,22 @@
+server:
+  port: ${PORT:8083}
+
+spring:
+  application:
+    name: ms-jornadas
+  config:
+    import: optional:file:.env[.properties],optional:file:../.env[.properties]
+  datasource:
+    url: ${DB_URL:jdbc:oracle:thin:@localhost:1521/FREEPDB1}
+    username: ${DB_USER:emterreno}
+    password: ${DB_PASSWORD}
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:false}
+    open-in-view: false
+
+servicios:
+  sucursales:
+    url: ${SUCURSALES_URL:http://localhost:8081}
