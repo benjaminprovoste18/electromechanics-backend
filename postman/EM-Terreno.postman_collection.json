@@ -1,0 +1,328 @@
+{
+  "info": {
+    "name": "EM Terreno - Microservicios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "sucursales",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "ordenes",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "jornadas",
+      "value": "http://localhost:8083"
+    }
+  ],
+  "item": [
+    {
+      "name": "ms-sucursales",
+      "item": [
+        {
+          "name": "Listar sucursales",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{sucursales}}/api/sucursales"
+          }
+        },
+        {
+          "name": "Buscar sucursal SUC-01",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{sucursales}}/api/sucursales/SUC-01"
+          }
+        },
+        {
+          "name": "Crear sucursal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{sucursales}}/api/sucursales",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCliente\": \"Cliente Demo F - Taller Cerrillos\",\n  \"direccion\": \"Av. Inventada 450, Cerrillos\",\n  \"latitud\": -33.494,\n  \"longitud\": -70.716\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear sucursal inválida (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{sucursales}}/api/sucursales",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCliente\": \"\",\n  \"direccion\": \"Av\",\n  \"latitud\": 10.0,\n  \"longitud\": -70.7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actualizar sucursal SUC-06",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{sucursales}}/api/sucursales/SUC-06",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreCliente\": \"Oficina Técnica Electromechanics (demo)\",\n  \"direccion\": \"Av. Referencia 1550, Maipú\",\n  \"latitud\": -33.495,\n  \"longitud\": -70.757\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-ordenes",
+      "item": [
+        {
+          "name": "Listar órdenes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{ordenes}}/api/ordenes"
+          }
+        },
+        {
+          "name": "Órdenes del técnico 33.333.333-3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{ordenes}}/api/ordenes?tecnicoId=EMP-333333333"
+          }
+        },
+        {
+          "name": "Órdenes pendientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{ordenes}}/api/ordenes?estado=PENDIENTE"
+          }
+        },
+        {
+          "name": "Buscar orden OT-001",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{ordenes}}/api/ordenes/OT-001"
+          }
+        },
+        {
+          "name": "Crear orden",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{ordenes}}/api/ordenes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tecnicoId\": \"EMP-333333333\",\n  \"sucursalId\": \"SUC-02\",\n  \"fechaProgramada\": 1800000000000,\n  \"descripcion\": \"Cambio de luminarias en bodega principal\",\n  \"actividadesRequeridas\": \"Retiro de equipos dañados e instalación de focos LED\",\n  \"prioridad\": \"URGENTE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Iniciar orden OT-001",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{ordenes}}/api/ordenes/OT-001",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tecnicoId\": \"EMP-333333333\",\n  \"sucursalId\": \"SUC-01\",\n  \"fechaProgramada\": 1800000000000,\n  \"estado\": \"EN_PROCESO\",\n  \"descripcion\": \"Mantención preventiva de tablero eléctrico general\",\n  \"actividadesRequeridas\": \"Inspección termográfica, reapriete de conexiones, limpieza de barras\",\n  \"prioridad\": \"NORMAL\",\n  \"horaInicio\": 1800000100000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Retroceder estado (409)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{ordenes}}/api/ordenes/OT-001",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tecnicoId\": \"EMP-333333333\",\n  \"sucursalId\": \"SUC-01\",\n  \"fechaProgramada\": 1800000000000,\n  \"estado\": \"PENDIENTE\",\n  \"descripcion\": \"Mantención preventiva de tablero eléctrico general\",\n  \"actividadesRequeridas\": \"Inspección termográfica, reapriete de conexiones, limpieza de barras\",\n  \"prioridad\": \"NORMAL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Actividades de OT-001",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{ordenes}}/api/ordenes/OT-001/actividades"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-ordenes (actividades)",
+      "item": [
+        {
+          "name": "Listar actividades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{ordenes}}/api/actividades"
+          }
+        },
+        {
+          "name": "Registrar actividad en OT-001",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{ordenes}}/api/actividades",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ordenId\": \"OT-001\",\n  \"detalle\": \"Reapriete de conexiones de barras y limpieza\",\n  \"repuestos\": \"Terminales de cobre\",\n  \"estadoEquipo\": \"OPERATIVO\",\n  \"horaRegistro\": 1800000200000,\n  \"comentarios\": \"Sin observaciones\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-jornadas",
+      "item": [
+        {
+          "name": "Listar marcaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jornadas}}/api/jornadas"
+          }
+        },
+        {
+          "name": "Marcaciones del técnico",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jornadas}}/api/jornadas?empleadoId=EMP-333333333"
+          }
+        },
+        {
+          "name": "Resumen de horas de hoy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{jornadas}}/api/jornadas/resumen"
+          }
+        },
+        {
+          "name": "Marcar entrada en Maipú",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jornadas}}/api/jornadas",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empleadoId\": \"EMP-333333333\",\n  \"tipo\": \"ENTRADA\",\n  \"fechaHora\": 1800000000000,\n  \"latitud\": -33.5112,\n  \"longitud\": -70.7581,\n  \"precisionMetros\": 12.5,\n  \"ubicacionSimulada\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Marcación inválida (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{jornadas}}/api/jornadas",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"empleadoId\": \"EMP-333333333\",\n  \"fechaHora\": 1800000000000,\n  \"latitud\": 120.0,\n  \"precisionMetros\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
